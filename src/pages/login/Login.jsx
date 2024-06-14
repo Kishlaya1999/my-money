@@ -1,6 +1,7 @@
 /** @format */
 
 import { useState } from "react";
+import { useLogin } from "../../hooks/useLogin";
 
 // styles
 import styles from "./Login.module.css";
@@ -8,10 +9,11 @@ import styles from "./Login.module.css";
 export default function Login() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const { login, error, loading } = useLogin();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(email, password);
+		login(email, password);
 	};
 
 	return (
@@ -29,7 +31,10 @@ export default function Login() {
 					value={password}
 				/>
 			</label>
-			<button className="btn">Login</button>
+			<button className="btn" disabled={loading && true}>
+				{loading ? "Logging In..." : "Login"}
+			</button>
+			{error && <span>{error}</span>}
 		</form>
 	);
 }
