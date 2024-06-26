@@ -32,11 +32,11 @@ export const AuthContextPorvider = ({ children }) => {
 		// Logged In ==> Home
 		// Logged out ==> SignUp or Login Page
 		// We only need to check the auth status initially
-		projectAuth.onAuthStateChanged((user) => {
+		const unsub = projectAuth.onAuthStateChanged((user) => {
 			// user logged in => user obj
 			// user logged out => null
 			// But whenever we run login or logout "AUTH_IS_READY" is going to dispatched we only want to dispatch it once in very beginning, for that firebase gives us as unsubscribe function which we need to invoke it for stopping it to run
-			const unsub = dispatch({ type: "AUTH_IS_READY", payload: user });
+			dispatch({ type: "AUTH_IS_READY", payload: user });
 			unsub();
 		});
 	}, []);
